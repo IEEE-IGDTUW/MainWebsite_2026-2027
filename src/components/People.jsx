@@ -1,10 +1,12 @@
+import { useState } from 'react';
+
 // People.jsx — IEEE IGDTUW Senior Execom 2026–2027
 
 const BASE = `${import.meta.env.BASE_URL}IEEE Senior Execomm 2026-2027/`;
 
 // ─── Team data ───────────────────────────────────────────────────────────────
 // Leadership cluster is shown first and larger; the rest in a uniform grid.
-const leadership = [
+const leadershipAll = [
   {
     id: '01',
     name: 'Himani Gupta',
@@ -62,6 +64,37 @@ const leadership = [
     initials: 'SS',
   },
 ];
+const leadership = leadershipAll.slice(4);
+
+const compactRoles = {
+  'Event Management Head': 'EM Head',
+  'IEEE General Secretary': 'IEEE Gen. Sec.',
+  'WIE General Secretary': 'WIE Gen. Sec.',
+  'IEEE Vice-Chairperson': 'IEEE Vice-Chair',
+  'WIE Vice-Chairperson': 'WIE Vice-Chair',
+};
+
+function updateProfileCard(event) {
+  if (event.pointerType === 'touch') return;
+
+  const bounds = event.currentTarget.getBoundingClientRect();
+  const x = (event.clientX - bounds.left) / bounds.width;
+  const y = (event.clientY - bounds.top) / bounds.height;
+  const style = event.currentTarget.style;
+
+  style.setProperty('--profile-x', `${x * 100}%`);
+  style.setProperty('--profile-y', `${y * 100}%`);
+  style.setProperty('--profile-rotate-x', `${(0.5 - y) * 12}deg`);
+  style.setProperty('--profile-rotate-y', `${(x - 0.5) * 12}deg`);
+}
+
+function resetProfileCard(event) {
+  const style = event.currentTarget.style;
+  style.setProperty('--profile-x', '50%');
+  style.setProperty('--profile-y', '50%');
+  style.setProperty('--profile-rotate-x', '0deg');
+  style.setProperty('--profile-rotate-y', '0deg');
+}
 
 const heads = [
   // Event Management Heads
@@ -260,97 +293,87 @@ function InitialsAvatar({ initials, large = false }) {
   );
 }
 
-function LeaderCard({ member }) {
+function ProfileCard({ member, blackAndWhite, onToggle }) {
+  const [imageFailed, setImageFailed] = useState(false);
+
   return (
-    <article className="group min-w-0">
-      {/* Portrait */}
-      <div className="relative aspect-[3/4] overflow-hidden" style={{ backgroundColor: 'var(--bg-alt)' }}>
-        {member.heicFallback || !member.image ? (
-          <InitialsAvatar initials={member.initials} large />
-        ) : (
-          <img
-            src={member.image}
-            alt={member.name}
-            loading="lazy"
-            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-          />
-        )}
-
-        {/* Number badge */}
-        <span className="absolute left-4 top-4 text-xs font-semibold tracking-wider text-white drop-shadow-md">
-          {member.id}
-        </span>
-
-        {/* Bottom gradient overlay on hover */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              'linear-gradient(to top, rgba(4,52,115,0.55) 0%, transparent 100%)',
-          }}
-        />
-      </div>
-
-      {/* Name and role */}
-      <div className="pt-5">
-        <h3 className="text-xl font-semibold tracking-[-0.045em] sm:text-2xl">
-          {member.name}
-        </h3>
-        <p
-          className="mt-1.5 text-sm font-medium leading-6 sm:text-base"
-          style={{ color: 'var(--fg-muted)' }}
-        >
-          {member.role}
-        </p>
-        {member.heicFallback && (
-          <p className="mt-1 text-[10px] tracking-wider" style={{ color: 'var(--highlight)' }}>
-            ⚠ Photo pending conversion
+    <article
+      className="group min-w-0"
+      onPointerMove={updateProfileCard}
+      onPointerLeave={resetProfileCard}
+      onPointerCancel={resetProfileCard}
+    >
+      <div className="profile-card__frame">
+        <div className="profile-card__image">
+          {member.heicFallback || !member.image || imageFailed ? (
+            <InitialsAvatar initials={member.initials} large />
+          ) : (
+            <img
+              src={member.image}
+              alt={`${member.name}, ${member.role}`}
+              loading="lazy"
+              className={`people-portrait h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105${blackAndWhite ? ' people-portrait--bw' : ''}`}
+              onError={() => setImageFailed(true)}
+              role="button"
+              tabIndex={0}
+              aria-label={`Toggle ${member.name}'s portrait to ${blackAndWhite ? 'color' : 'black and white'}`}
+              aria-pressed={blackAndWhite}
+              onClick={onToggle}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  onToggle();
+                }
+              }}
+            />
+          )}
+          <div className="profile-card__details">
+            <h3>{member.name}</h3>
+            {member.heicFallback && <small>Photo pending conversion</small>}
+          </div>
+        </div>
+        <div className="profile-card__footer">
+          <p className="profile-card__role" title={member.role}>
+            {compactRoles[member.role] || member.role}
           </p>
-        )}
-      </div>
-    </article>
-  );
-}
-
-function HeadCard({ member }) {
-  return (
-    <article className="group min-w-0">
-      {/* Portrait */}
-      <div
-        className="relative aspect-square overflow-hidden"
-        style={{ backgroundColor: 'var(--bg-alt)' }}
-      >
-        {member.heicFallback || !member.image ? (
-          <InitialsAvatar initials={member.initials} />
-        ) : (
-          <img
-            src={member.image}
-            alt={member.name}
-            loading="lazy"
-            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"          />
-        )}
-
-        {/* Bottom gradient on hover */}
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              'linear-gradient(to top, rgba(4,52,115,0.5) 0%, transparent 100%)',
-          }}
-        />
-      </div>
-
-      {/* Name and role */}
-      <div className="pt-4">
-        <h3 className="text-base font-semibold tracking-[-0.04em] sm:text-lg">
-          {member.name}
-        </h3>
-        <p
-          className="mt-1 text-xs font-medium leading-5 sm:text-sm"
-          style={{ color: 'var(--fg-muted)' }}
-        >
-          {member.role}
-        </p>
+          <nav className="profile-card__socials" aria-label={`${member.name}'s links`}>
+            <a
+              className="profile-card__social"
+              href="https://www.instagram.com/ieeeigdtuw"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="IEEE IGDTUW on Instagram"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a
+              className="profile-card__social"
+              href="https://www.linkedin.com/company/ieee-igdtuw/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="IEEE IGDTUW on LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="3" />
+                <path d="M8 10v7M8 7.5v.1M12 17v-4a3 3 0 0 1 6 0v4M12 10v7" />
+              </svg>
+            </a>
+            <a
+              className="profile-card__social"
+              href="mailto:ieeeigdtu@gmail.com"
+              aria-label="Email IEEE IGDTUW"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="3" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+            </a>
+          </nav>
+        </div>
       </div>
     </article>
   );
@@ -359,10 +382,16 @@ function HeadCard({ member }) {
 // ─── Main section ─────────────────────────────────────────────────────────────
 
 export default function People() {
+  const [blackAndWhite, setBlackAndWhite] = useState({});
+
+  const togglePortrait = (id) => {
+    setBlackAndWhite((current) => ({ ...current, [id]: !current[id] }));
+  };
+
   return (
     <section
       id="team"
-      className="overflow-hidden bg-[#E3EBF0] text-[#043473] dark:bg-[#28518A] dark:text-[#E4D076]"
+      className="overflow-hidden bg-[#F0E7D2] text-[#30291F] dark:bg-[#211E19] dark:text-[#E8DDC6]"
     >
       <div className="mx-auto max-w-[1800px] px-6 py-20 sm:px-10 sm:py-24 lg:px-16 lg:py-28">
 
@@ -370,21 +399,16 @@ export default function People() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
 
           {/* Label */}
-          <div className="lg:col-span-3">
-            <p className="pt-2 text-xs font-semibold tracking-[0.2em]" style={{ color: 'var(--fg-muted)' }}>
-              <span style={{ color: 'var(--highlight)' }}>04&nbsp;</span>
-              THE PEOPLE
-            </p>
-          </div>
+          
 
           {/* Main heading */}
           <div className="lg:col-span-6">
             <h2 className="text-[clamp(2.75rem,6vw,5.5rem)] font-semibold leading-[0.88] tracking-[-0.075em]">
-              <span className="block text-[#043473] dark:text-[#E4D076]">
+              <span className="block text-[#282117] dark:text-[#F2E9D4]">
                 Good ideas need
               </span>
 
-              <span className="block text-[#28518A] dark:text-[#D7D6AE]">
+              <span className="block text-[#8C3027] dark:text-[#e4202f]">
                 good company.
               </span>
 
@@ -401,7 +425,7 @@ export default function People() {
                 Meet the Senior Execom team making space for possibility — one
                 chapter at a time.
               </p>
-              <p className="mt-3 text-xs font-bold tracking-[0.16em] text-[#28518A] dark:text-[#E4D076]">
+              <p className="mt-3 text-xs font-bold tracking-[0.16em] text-[#694B35] dark:text-[#a29c8e]">
                 2026–2027
               </p>
             </div>
@@ -425,7 +449,12 @@ export default function People() {
 
           <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
             {leadership.map((member) => (
-              <LeaderCard key={member.id} member={member} />
+              <ProfileCard
+                key={member.id}
+                member={member}
+                blackAndWhite={Boolean(blackAndWhite[member.id])}
+                onToggle={() => togglePortrait(member.id)}
+              />
             ))}
           </div>
         </div>
@@ -447,7 +476,12 @@ export default function People() {
 
           <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
             {heads.map((member) => (
-              <HeadCard key={member.id} member={member} />
+              <ProfileCard
+                key={member.id}
+                member={member}
+                blackAndWhite={Boolean(blackAndWhite[member.id])}
+                onToggle={() => togglePortrait(member.id)}
+              />
             ))}
           </div>
         </div>
@@ -460,8 +494,7 @@ export default function People() {
             color: 'var(--fg-muted)',
           }}
         >
-          <p>IEEE STUDENT BRANCH · IGDTUW</p>
-          <p>THE PEOPLE BEHIND THE PROGRESS · 2026–2027</p>
+          
         </div>
 
       </div>

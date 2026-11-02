@@ -147,13 +147,13 @@ function EventModal({ event, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="event-modal-title"
-        className="relative my-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-[#8B9091]/40 bg-[#101923] text-[#D7D6AE] shadow-2xl"
+        className="relative my-auto w-full max-w-4xl overflow-hidden rounded-2xl border border-[#8B9091]/40 bg-[#0b0b0c] text-[#D7D6AE] shadow-2xl"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close event details"
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-3xl text-white transition hover:bg-[#476998]"
+          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-3xl text-white transition hover:bg-[#e4202f]"
         >
           ×
         </button>
@@ -162,9 +162,7 @@ function EventModal({ event, onClose }) {
 
           {/* Event heading */}
           <div className="px-6 pb-5 pt-8 sm:px-9 sm:pt-10">
-            <p className="mb-3 text-xs font-semibold tracking-[0.2em] text-[#8B9091]">
-              IEEE IGDTUW · PAST EVENT
-            </p>
+            
 
             <h3
               id="event-modal-title"
@@ -187,7 +185,7 @@ function EventModal({ event, onClose }) {
             {event.images.map((image, index) => (
               <div
                 key={image}
-                className={`overflow-hidden rounded-xl border border-[#8B9091]/25 bg-[#043473]/20 ${
+                className={`overflow-hidden rounded-xl border border-[#8B9091]/25 bg-[#8b0f1a]/20 ${
   event.images.length === 1 ? 'sm:col-span-3' : ''
 }`}
               >
@@ -208,7 +206,7 @@ function EventModal({ event, onClose }) {
           {/* Description */}
           <div className="px-6 py-7 sm:px-9 sm:py-9">
             <div className="mb-4 flex flex-wrap items-center gap-3">
-              <span className="rounded-full border border-[#476998]/70 px-4 py-2 text-xs text-[#D7D6AE]">
+              <span className="rounded-full border border-[#e4202f]/70 px-4 py-2 text-xs text-[#D7D6AE]">
                 {event.type}
               </span>
 
@@ -226,9 +224,7 @@ function EventModal({ event, onClose }) {
             </p>
 
             <div className="mt-7 border-t border-[#8B9091]/25 pt-5">
-              <p className="text-xs tracking-wider text-[#8B9091]">
-                IEEE STUDENT BRANCH · IGDTUW
-              </p>
+              
 
               <p className="mt-2 text-sm text-[#B2B39D]">
                 Follow IEEE IGDTUW to stay updated on upcoming events.
@@ -257,19 +253,17 @@ export default function Events() {
 
               {/* Section label */}
               <p className="mb-8 pt-2 text-xs font-semibold tracking-[0.22em] text-black/50">
-                <span className="mr-3 text-[#476998] dark:text-[#E4D076]">
-                  02
-                </span>
+                
                 OUR JOURNEY
               </p>
 
               {/* Main heading */}
               <h2 className="text-[clamp(3.5rem,6.5vw,7rem)] font-bold leading-[0.88] tracking-[-0.07em]">
-                <span className="block text-[#043473] dark:text-[#E4D076]">
+                <span className="block text-[#8b0f1a] dark:text-[#E4D076]">
                   Moments
                 </span>
 
-                <span className="block text-[#476998] dark:text-[#D7D6AE]">
+                <span className="block text-[#e4202f] dark:text-[#D7D6AE]">
                   that matter.
                 </span>
               </h2>
@@ -319,8 +313,8 @@ export default function Events() {
           </div>
 
           {/* Section footer */}
-          <div className="mt-10 flex flex-col justify-between gap-3 border-t border-[#28518A]/40 pt-5 text-xs tracking-wider text-black/45 dark:border-[#D7D6AE]/25 sm:flex-row">
-            <p>IEEE STUDENT BRANCH · IGDTUW</p>
+          <div className="mt-10 flex flex-col justify-between gap-3 border-t border-[#b3121f]/40 pt-5 text-xs tracking-wider text-black/45 dark:border-[#D7D6AE]/25 sm:flex-row">
+           
             <p>PAST EVENTS / 2024–2026</p>
           </div>
 

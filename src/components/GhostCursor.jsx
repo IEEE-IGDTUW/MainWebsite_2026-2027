@@ -435,12 +435,7 @@ const GhostCursor = ({
     useEffect(() => {
         const container = containerRef.current;
         const canvas = canvasRef.current;
-        const parent = container?.parentElement;
-        if (!container || !canvas || !parent) return;
-
-        const previousPosition = parent.style.position;
-        const reposition = getComputedStyle(parent).position === 'static';
-        if (reposition) parent.style.position = 'relative';
+        if (!container || !canvas) return;
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         const gl = canvas.getContext('webgl2', {
@@ -452,14 +447,12 @@ const GhostCursor = ({
             powerPreference: 'default'
         });
         if (!gl || !gl.getExtension('EXT_color_buffer_float')) {
-            if (reposition) parent.style.position = previousPosition;
             return;
         }
         const linked = [link(gl, SIM), link(gl, SHADE), link(gl, DOWN), link(gl, BLUR), link(gl, COMPOSITE)];
         const [simProgram, shadeProgram, downProgram, blurProgram, compositeProgram] = linked;
         if (!simProgram || !shadeProgram || !downProgram || !blurProgram || !compositeProgram) {
             for (const item of linked) if (item) gl.deleteProgram(item.program);
-            if (reposition) parent.style.position = previousPosition;
             return;
         }
         const programs = {
@@ -858,7 +851,6 @@ const GhostCursor = ({
                 gl.deleteVertexArray(vao);
                 for (const item of Object.values(programs)) gl.deleteProgram(item.program);
             }
-            if (reposition) parent.style.position = previousPosition;
         };
     }, [generation]);
 

@@ -13,6 +13,39 @@ const navLinks = [
      { label: 'FAQ', href: '#faq' },
 ];
 
+const socialLinks = [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/ieee-igdtuw/', icon: 'linkedin' },
+    { label: 'Instagram', href: 'https://www.instagram.com/ieeeigdtuw', icon: 'instagram' },
+    { label: 'Email', href: 'mailto:ieeeigdtu@gmail.com', icon: 'email' },
+];
+
+function SocialIcon({ type }) {
+    if (type === 'linkedin') {
+        return (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 8.5v10M5 5.5v.1M9.5 18.5v-10h4v1.8c.7-1.3 1.8-2 3.3-2 2.7 0 3.7 1.7 3.7 4.7v5.5h-4v-5c0-1.5-.3-2.5-1.8-2.5s-2.2 1-2.2 2.5v5h-3Z" />
+            </svg>
+        );
+    }
+
+    if (type === 'instagram') {
+        return (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.7" cy="6.8" r="0.8" fill="currentColor" stroke="none" />
+            </svg>
+        );
+    }
+
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m3.5 7 8.5 6 8.5-6" />
+        </svg>
+    );
+}
+
 const SunIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
@@ -97,7 +130,7 @@ export default function Navbar() {
             data-dark={isDark}
             style={{ color: 'var(--fg)' }}
         >
-            <nav className="mx-auto grid max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 pt-4 sm:px-8 lg:px-12">
+            <nav className="mx-auto grid max-w-[1800px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 pt-2 sm:px-8 lg:px-12">
                 {/* TUBE 1: Logo */}
                 <a
                     href="#home"
@@ -106,41 +139,53 @@ export default function Navbar() {
                     onClick={() => setMenuOpen(false)}
                 >
                     <img
-                        src={`${import.meta.env.BASE_URL}${isDark ? 'ieee-logo.png' : 'ieee-logo-dark.png'}`}
+                        src={`${import.meta.env.BASE_URL}ieee-logo.png`}
                         alt="IEEE Logo"
-                        className="h-9 w-auto object-contain sm:h-10"
+                        className="h-8 w-auto object-contain sm:h-9"
                     />
                 </a>
 
                 {/* TUBE 2: Nav links */}
                 <div className="ieee-tube ieee-tube--nav hidden justify-self-center lg:inline-flex">
-                    {/* TUBE 2: Plain Navigation Pills */}
-                    <div className="ieee-tube ieee-tube--nav hidden justify-self-center lg:inline-flex">
-                        <div className="ieee-plain-nav">
-                            {navLinks.map((link, index) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    onClick={() => {
-                                        setActive(index);
-                                        clicking.current = true;
+                    <div className="ieee-plain-nav">
+                        {navLinks.map((link, index) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                onClick={() => {
+                                    setActive(index);
+                                    clicking.current = true;
 
-                                        setTimeout(() => {
-                                            clicking.current = false;
-                                        }, 1500);
-                                    }}
-                                    className={`ieee-nav-pill ${active === index ? 'active' : ''}`}
-                                >
-                                    {link.label}
-                                </a>
-                            ))}
-                        </div>
+                                    setTimeout(() => {
+                                        clicking.current = false;
+                                    }, 1500);
+                                }}
+                                className={`ieee-nav-pill ${active === index ? 'active' : ''}`}
+                            >
+                                {link.label}
+                            </a>
+                        ))}
                     </div>
                 </div>
 
                 
                 {/* TUBE 3: Mobile menu + theme switch */}
                 <div className="ieee-tube ieee-tube--actions justify-self-end">
+                    <div className="ieee-social-links" aria-label="Social media and email">
+                        {socialLinks.map((link) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                aria-label={link.label}
+                                title={link.label}
+                                target={link.icon === 'email' ? undefined : '_blank'}
+                                rel={link.icon === 'email' ? undefined : 'noreferrer'}
+                                className="ieee-social-link"
+                            >
+                                <SocialIcon type={link.icon} />
+                            </a>
+                        ))}
+                    </div>
                     <button
                         type="button"
                         onClick={() => setMenuOpen((open) => !open)}
@@ -151,7 +196,6 @@ export default function Navbar() {
                         {menuOpen ? 'CLOSE ×' : 'MENU ☰'}
                     </button>
 
-                    <ThemeSwitch isDark={isDark} onClick={toggle} />
                 </div>
 
             </nav>

@@ -1,6 +1,4 @@
 
-import ScrollFloat from './ScrollFloat'
-
 const aimCards = [
   {
     number: '01',
@@ -38,13 +36,9 @@ export default function About() {
 
           {/* Top divider & label */}
           <div className="flex items-center justify-between border-b border-border/30 pb-9">
-          <span className="text-xs font-bold tracking-[0.2em] text-secondary">
-            01
-          </span>
+          
 
-            <span className="text-[10px] font-semibold tracking-[0.2em] text-fg-muted sm:text-xs">
-            ABOUT · AIM & MISSION
-          </span>
+           
           </div>
 
           {/* Main headline and intro */}
@@ -52,24 +46,10 @@ export default function About() {
 
             {/* Left: Heading */}
             <div className="lg:col-span-8">
-              <ScrollFloat
-                  effect="float"
-                  splitBy="chars"
-                  direction="up"
-                  order="start"
-                  fromColor="currentColor"
-                  animationDuration={1}
-                  ease="back.inOut(2)"
-                  scrollStart="center bottom+=50%"
-                  scrollEnd="bottom bottom-=40%"
-                  stagger={0.03}
-                  distance={120}
-                  stretch={2.3}
-                  smoothing={0}
-                  textClassName="technology-heading-text text-[clamp(3.5rem,8vw,7.5rem)] lg:!text-[clamp(3rem,5.2vw,5.2rem)]"
-              >
-                Technology is better together.
-              </ScrollFloat>
+              <h2 className="about-heading text-[clamp(3.5rem,8vw,7.5rem)] lg:text-[clamp(3rem,5.2vw,5.2rem)]">
+                Technology is better
+                <span>together.</span>
+              </h2>
             </div>
 
             {/* Right: Description & Meet the Community */}
@@ -95,7 +75,7 @@ export default function About() {
 
           {/* Central Aim Statement */}
           <div className="mt-14 sm:mt-20">
-            <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-surface/60 p-8 sm:p-12 lg:p-14 shadow-lg backdrop-blur-sm">
+            <div className="about-aim-panel relative overflow-hidden rounded-2xl border border-border/50 bg-surface/60 p-8 sm:p-12 lg:p-14 shadow-lg backdrop-blur-sm">
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-secondary" />
                 <p className="text-xs font-bold tracking-[0.22em] text-secondary">
@@ -113,16 +93,12 @@ export default function About() {
           <div className="mt-14 sm:mt-20">
             <div className="mb-8 flex items-center justify-between">
               <div>
-                <p className="text-xs font-semibold tracking-[0.2em] text-secondary">
-                  CORE PILLARS
-                </p>
+                
                 <h3 className="mt-2 text-2xl font-bold tracking-tight text-heading sm:text-3xl">
                   Aim & Mission
                 </h3>
               </div>
-              <span className="hidden text-xs font-medium tracking-wider text-fg-muted sm:block">
-              04 PILLARS
-            </span>
+              
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

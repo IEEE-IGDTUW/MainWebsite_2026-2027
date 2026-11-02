@@ -1,21 +1,19 @@
-/* ================= PALETTE ================= */
-/* Light mode: pale blue background, navy text */
+/* ================= NOIR PALETTE ================= */
 .cur[data-t="light"] {
-    --cur-dot:       #28518A;               /* Blue Nude */
-    --cur-dot-ring:  #FFFFFF;               /* white outline so the dot shows on any background */
-    --cur-ring:      rgba(40,81,138,.65);   /* Blue Nude */
+    --cur-dot:       #28518A;
+    --cur-dot-ring:  #FFFFFF;
+    --cur-ring:      rgba(40,81,138,.65);
     --cur-hover:     #28518A;
-    --cur-hover-bg:  rgba(71,105,152,.18);  /* Queen Blue wash */
-    --cur-glow:      rgba(71,105,152,.35);  /* soft blue glow */
+    --cur-hover-bg:  rgba(71,105,152,.18);
+    --cur-glow:      rgba(71,105,152,.35);
 }
-/* Dark mode: deep blue background, yellow accent */
 .cur[data-t="dark"] {
-    --cur-dot:       #E4D076;               /* Green Papaya */
+    --cur-dot:       #FFFFFF;
     --cur-dot-ring:  transparent;
-    --cur-ring:      rgba(215,214,174,.65); /* Green Mesh */
-    --cur-hover:     #E4D076;               /* Green Papaya */
-    --cur-hover-bg:  rgba(228,208,118,.16);
-    --cur-glow:      rgba(228,208,118,.5);
+    --cur-ring:      rgba(245,238,220,.88);
+    --cur-hover:     #FFFFFF;
+    --cur-hover-bg:  rgba(255,255,255,.16);
+    --cur-glow:      rgba(255,255,255,.48);
 }
 /* =========================================== */
 
@@ -35,13 +33,16 @@ html.has-cursor [contenteditable="true"] { cursor: text !important; }
 .cur-dot span,
 .cur-ring span { display: block; border-radius: 50%; transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s, border-color .25s, box-shadow .25s; }
 
-.cur-dot span  { width: 8px;  height: 8px;  margin: -4px 0 0 -4px;
+.cur-dot span  { width: 8px;  height: 8px;
+    position: absolute; top: 0; left: 0; margin: 0;
+    transform: translate(-50%, -50%);
     background: var(--cur-dot);
     box-shadow: 0 0 0 1.5px var(--cur-dot-ring), 0 0 12px 2px var(--cur-glow); }
-.cur-ring span { width: 38px; height: 38px; margin: -19px 0 0 -19px;
+.cur-ring span { width: 38px; height: 38px; position: absolute; top: 0; left: 0;
+    transform: translate(-50%, -50%);
     border: 1.5px solid var(--cur-ring); }
 
-.cur.is-hover .cur-ring span { transform: scale(1.6); border-color: var(--cur-hover); background: var(--cur-hover-bg); }
-.cur.is-hover .cur-dot span  { transform: scale(.5); }
-.cur.is-down  .cur-ring span { transform: scale(.75); }
-.cur.is-down.is-hover .cur-ring span { transform: scale(1.3); }
+.cur.is-hover .cur-ring span { transform: translate(-50%, -50%) scale(1.6); border-color: var(--cur-hover); background: var(--cur-hover-bg); }
+.cur.is-hover .cur-dot span  { transform: translate(-50%, -50%) scale(.5); }
+.cur.is-down  .cur-ring span { transform: translate(-50%, -50%) scale(.75); }
+.cur.is-down.is-hover .cur-ring span { transform: translate(-50%, -50%) scale(1.3); }

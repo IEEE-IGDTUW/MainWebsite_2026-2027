@@ -156,7 +156,7 @@ export default function Footer() {
         <div className="ieee-footer__legal">
           <p>© {new Date().getFullYear()} IEEE IGDTUW</p>
           <span aria-hidden="true">·</span>
-          <p>Made with intent</p>
+          <p>Made with 💗</p>
 
           <a href="#home" className="ieee-footer__top">
             BACK TO TOP

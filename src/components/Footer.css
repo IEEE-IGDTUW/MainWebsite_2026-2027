@@ -5,21 +5,20 @@
 ========================================================== */
 
 .ieee-footer {
-    /* Light theme: the site's olive, with Konjo blue type and logo */
-    --ft-bg: var(--palette-green-mesh);
-    --ft-fg: var(--palette-konjo);
-    --ft-muted: rgba(4, 52, 115, 0.8);
-    --ft-faint: rgba(4, 52, 115, 0.62);
-    --ft-line: rgba(4, 52, 115, 0.28);
-    --ft-accent: var(--palette-blue-nude);
-    --ft-logo: var(--palette-konjo);
+    --ft-bg: var(--bg-alt);
+    --ft-fg: var(--fg);
+    --ft-muted: var(--fg-muted);
+    --ft-faint: var(--fg-muted);
+    --ft-line: var(--border);
+    --ft-accent: var(--accent);
+    --ft-logo: var(--fg);
 
-    --ft-tube-bg: rgba(4, 52, 115, 0.07);
+    --ft-tube-bg: color-mix(in srgb, var(--surface) 85%, transparent);
     --ft-tube-hi: rgba(255, 255, 255, 0.4);
-    --ft-tube-shadow: 0 10px 28px -14px rgba(4, 52, 115, 0.5);
+    --ft-tube-shadow: var(--card-shadow);
 
-    --ft-hover-bg: var(--palette-konjo);
-    --ft-hover-fg: var(--palette-green-mesh);
+    --ft-hover-bg: var(--accent);
+    --ft-hover-fg: var(--accent-text);
 
     position: relative;
     overflow: hidden;
@@ -33,17 +32,17 @@
 /* Dark theme: a notch deeper than the page, olive type, papaya accents,
    tubes borrow the navbar's dark glass */
 .dark .ieee-footer {
-    --ft-bg: #02275a;
-    --ft-fg: var(--palette-green-mesh);
-    --ft-muted: rgba(215, 214, 174, 0.74);
-    --ft-faint: rgba(215, 214, 174, 0.52);
-    --ft-line: rgba(215, 214, 174, 0.18);
-    --ft-accent: var(--palette-papaya);
-    --ft-logo: var(--palette-green-mesh);
+    --ft-bg: var(--bg-alt);
+    --ft-fg: var(--fg);
+    --ft-muted: var(--fg-muted);
+    --ft-faint: var(--fg-muted);
+    --ft-line: var(--border);
+    --ft-accent: var(--highlight);
+    --ft-logo: var(--fg);
 
-    --ft-tube-bg: rgba(4, 52, 115, 0.55);
-    --ft-tube-hi: rgba(215, 214, 174, 0.14);
-    --ft-tube-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+    --ft-tube-bg: color-mix(in srgb, var(--surface) 85%, transparent);
+    --ft-tube-hi: rgba(232, 221, 198, 0.12);
+    --ft-tube-shadow: var(--card-shadow);
 
     --ft-hover-bg: var(--palette-papaya);
     --ft-hover-fg: var(--palette-konjo);
@@ -349,13 +348,13 @@
 ========================================== */
 
 html:not(.dark) .ieee-footer {
-  --footer-bg: #E5EDF3;
-  --footer-surface: #F5F6F1;
-  --footer-text: #043473;
-  --footer-muted: #476998;
-  --footer-border: #C9D7E4;
-  --footer-accent: #28518A;
-  --footer-shadow: 0 12px 32px rgba(4, 52, 115, 0.07);
+  --footer-bg: #E8DDC6;
+  --footer-surface: #F5EEDC;
+  --footer-text: #30291F;
+  --footer-muted: #675A48;
+  --footer-border: #B8A88D;
+  --footer-accent: #8C3027;
+  --footer-shadow: 0 7px 18px rgba(52, 39, 24, 0.08);
 
   background-color: var(--footer-bg);
   color: var(--footer-text);
@@ -390,9 +389,9 @@ html:not(.dark) .ieee-footer .ieee-footer__icon {
 }
 
 html:not(.dark) .ieee-footer .ieee-footer__icon:hover {
-  color: #FFFFFF;
-  background: #043473;
-  border-color: #043473;
+  color: #F5EEDC;
+  background: #8C3027;
+  border-color: #8C3027;
   transform: translateY(-3px);
 }
 

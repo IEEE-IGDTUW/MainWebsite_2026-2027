@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "../styles/cursor.css";
 
-const HOVER = 'a, button, [role="button"], [role="tab"], summary, label[for], select, input[type="checkbox"], input[type="radio"], input[type="submit"], .btn, [data-cursor="hover"]';
+const HOVER = 'a, button, [role="button"], [role="tab"], summary, label[for], select, input[type="checkbox"], input[type="radio"], input[type="submit"], .btn, .poster, [data-cursor="hover"]';
 const TEXT = 'input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]), textarea, [contenteditable="true"]';
 
 /* Reads the site theme. Adjust this if your toggle works differently. */
@@ -24,13 +24,12 @@ export default function CustomCursor() {
         // only for mouse / trackpad devices, touch screens keep the normal pointer
         if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-        const RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const root = document.documentElement;
         const w = wrap.current;
         root.classList.add("has-cursor");
 
         let theme = getTheme();
-        let x = -100, y = -100, rx = -100, ry = -100, raf = 0;
+        let x = -100, y = -100, raf = 0;
         const state = { t: "", hover: false, text: false, down: false, hide: true };
 
         const set = (k, v, cls) => {
@@ -60,10 +59,8 @@ export default function CustomCursor() {
         const onLeave = () => set("hide", true, "is-hidden");
 
         const loop = () => {
-            rx += (x - rx) * (RM ? 1 : 0.18);
-            ry += (y - ry) * (RM ? 1 : 0.18);
             dot.current.style.transform = `translate3d(${x}px,${y}px,0)`;
-            ring.current.style.transform = `translate3d(${rx}px,${ry}px,0)`;
+            ring.current.style.transform = `translate3d(${x}px,${y}px,0)`;
             raf = requestAnimationFrame(loop);
         };
         raf = requestAnimationFrame(loop);

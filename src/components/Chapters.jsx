@@ -37,14 +37,14 @@ const chapters = [
 
 const css = `
 .chapters-root {
-  --bg: #E3EBF0;
-  --fg: #0B3978;
-  --heading: #28518A;
-  --chapter-muted: #54749E;
-  --chapter-line: rgba(11, 57, 120, 0.15);
-  --card-bg: rgba(255, 255, 255, 0.38);
-  --card-hover: rgba(255, 255, 255, 0.72);
-  --card-border: rgba(40, 81, 138, 0.22);
+  --bg: #F0E7D2;
+  --fg: #30291F;
+  --heading: #8C3027;
+  --chapter-muted: #675A48;
+  --chapter-line: rgba(48, 41, 31, 0.2);
+  --card-bg: rgba(245, 238, 220, 0.7);
+  --card-hover: rgba(245, 238, 220, 0.95);
+  --card-border: rgba(48, 41, 31, 0.3);
 
   position: relative;
   isolation: isolate;
@@ -56,14 +56,14 @@ const css = `
 
 /* Dark theme */
 .dark .chapters-root {
-  --bg: #0B3978;
-  --fg: #E8E0B8;
-  --heading: #E4D076;
-  --chapter-muted: #B0C2DE;
-  --chapter-line: rgba(228, 208, 118, 0.2);
-  --card-bg: rgba(255, 255, 255, 0.045);
-  --card-hover: rgba(255, 255, 255, 0.09);
-  --card-border: rgba(228, 208, 118, 0.2);
+  --bg: #0f0f11;
+  --fg: #E8DDC6;
+  --heading: #e4202f;
+  --chapter-muted: #C0B39C;
+  --chapter-line: rgba(232, 221, 198, 0.2);
+  --card-bg: rgba(255, 255, 255, 0.035);
+  --card-hover: rgba(255, 255, 255, 0.07);
+  --card-border: rgba(232, 221, 198, 0.2);
 }
 
 /* Background lighting */
@@ -410,19 +410,9 @@ export default function Chapters() {
           className="flex items-center justify-between border-b pb-9"
           style={{ borderColor: "var(--chapter-line)" }}
         >
-          <span
-            className="text-xs font-bold tracking-[0.2em]"
-            style={{ color: "var(--heading)" }}
-          >
-            03
-          </span>
+          
 
-          <span
-            className="text-[10px] font-semibold tracking-[0.2em] sm:text-xs"
-            style={{ color: "var(--chapter-muted)" }}
-          >
-            FIND YOUR FREQUENCY
-          </span>
+          
         </div>
 
         {/* Heading and description */}
@@ -491,8 +481,7 @@ export default function Chapters() {
           className="mt-8 flex flex-col justify-between gap-3 text-[10px] tracking-[0.15em] sm:flex-row sm:text-xs"
           style={{ color: "var(--chapter-muted)" }}
         >
-          <span>IEEE STUDENT BRANCH · IGDTUW</span>
-          <span>EXPLORE · CONNECT · BUILD</span>
+         
         </div>
       </div>
     </section>

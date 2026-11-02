@@ -1,0 +1,494 @@
+.intro-cover {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 24px;
+  color: #30291f;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(114, 28, 29, 0.38), transparent 50%),
+    #09090a;
+  perspective: 1400px;
+}
+
+.intro-cover__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.intro-cover__paper {
+  position: relative;
+  width: min(100%, 520px);
+  padding: clamp(24px, 6vw, 56px);
+  border: 1px solid rgba(48, 41, 31, 0.7);
+  outline: 1px solid rgba(242, 235, 221, 0.35);
+  outline-offset: 7px;
+  background:
+    linear-gradient(rgba(242, 235, 221, 0.94), rgba(232, 221, 198, 0.98)),
+    #f2ebdd;
+  box-shadow: 16px 18px 0 rgba(0, 0, 0, 0.42), 0 28px 100px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.intro-cover__kicker,
+.intro-cover__eyebrow,
+.intro-cover__note,
+.intro-cover__issue {
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.intro-cover__kicker {
+  margin: 0 0 16px;
+  font-size: 10px;
+}
+
+.intro-cover__rule {
+  height: 2px;
+  background: #30291f;
+}
+
+.intro-cover__eyebrow {
+  margin: 20px 0 10px;
+  color: #8c3027;
+  font-size: 10px;
+}
+
+.intro-cover__paper h1 {
+  margin: 0;
+  font: 900 clamp(34px, 8vw, 58px)/0.94 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
+}
+
+.intro-cover__paper h1 span {
+  display: block;
+}
+
+.intro-cover__tagline {
+  margin: 16px 0;
+  color: #c4161f;
+  font: italic 700 clamp(18px, 4vw, 26px) Georgia, "Times New Roman", serif;
+}
+
+.intro-cover__rule--double {
+  position: relative;
+  margin: 0 0 18px;
+}
+
+.intro-cover__rule--double::after {
+  position: absolute;
+  inset: 4px 0 auto;
+  height: 1px;
+  background: #30291f;
+  content: "";
+}
+
+.intro-cover__note {
+  margin: 0 0 24px;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.intro-cover__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid #8c3027;
+  border-radius: 2px;
+  color: #f5eedc;
+  background: #8c3027;
+  font: 700 11px "Courier New", monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.intro-cover__button:hover {
+  background: #6e241e;
+  transform: translateY(-2px);
+}
+
+.intro-cover__button:focus-visible {
+  outline: 2px solid #c4161f;
+  outline-offset: 4px;
+}
+
+.intro-cover__button:disabled {
+  cursor: wait;
+}
+
+.intro-cover__issue {
+  position: absolute;
+  right: max(24px, 5vw);
+  bottom: 24px;
+  color: rgba(242, 235, 221, 0.6);
+  font-size: 9px;
+}
+
+.intro-cover.is-opening {
+  animation: intro-curtain-open 1100ms 250ms cubic-bezier(0.7, 0, 0.3, 1) both;
+  pointer-events: none;
+}
+
+.intro-cover.is-opening .intro-cover__paper {
+  animation: intro-paper-open 850ms cubic-bezier(0.6, 0, 0.35, 1) both;
+}
+
+.intro-cover.is-opening .intro-cover__cursor-cue {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes intro-paper-open {
+  to {
+    opacity: 0;
+    transform: rotateY(-82deg) translateX(-8%);
+  }
+}
+
+@keyframes intro-curtain-open {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-cursor-tap {
+  0%,
+  100% {
+    transform: translate(26px, -20px);
+  }
+  54%,
+  70% {
+    transform: translate(0, 14px);
+  }
+  62% {
+    transform: translate(0, 14px) scale(0.82);
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-cover {
+    padding: 28px;
+  }
+
+  .intro-cover__paper {
+    padding: 28px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-cover.is-opening,
+  .intro-cover.is-opening .intro-cover__paper {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .intro-cover__cursor-cue {
+    animation: none;
+  }
+}
+
+.intro-cover {
+  color: #f2ebdd;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(196, 22, 31, 0.26), transparent 36%),
+    radial-gradient(ellipse at 50% 52%, rgba(242, 235, 221, 0.1), transparent 62%),
+    #09090a;
+}
+
+.intro-cover::before,
+.intro-cover::after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 26px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 16px,
+    rgba(242, 235, 221, 0.62) 16px 28px,
+    transparent 28px 44px
+  );
+  content: "";
+  opacity: 0.5;
+}
+
+.intro-cover::before {
+  top: 10px;
+}
+
+.intro-cover::after {
+  bottom: 10px;
+}
+
+.intro-cover__grain {
+  opacity: 0.11;
+}
+
+.intro-cover__film {
+  position: absolute;
+  left: 5vw;
+  right: 5vw;
+  height: 1px;
+  background: rgba(242, 235, 221, 0.2);
+}
+
+.intro-cover__film--top {
+  top: 13%;
+}
+
+.intro-cover__film--bottom {
+  bottom: 13%;
+}
+
+.intro-cover__stage {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 980px);
+  text-align: center;
+  animation: intro-stage-enter 900ms 100ms both;
+}
+
+.intro-cover__eyebrow,
+.intro-cover__edition {
+  color: rgba(242, 235, 221, 0.72);
+  font: 11px "Courier New", monospace;
+  letter-spacing: 0.26em;
+}
+
+.intro-cover__eyebrow {
+  margin: 0 0 22px;
+}
+
+.intro-cover__mark {
+  position: relative;
+  display: grid;
+  width: clamp(150px, 22vw, 230px);
+  aspect-ratio: 1;
+  margin: 0 auto 18px;
+  place-items: center;
+}
+
+.intro-cover__mark img {
+  position: relative;
+  z-index: 1;
+  width: 72%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(245, 238, 220, 0.28));
+}
+
+.intro-cover__orbit {
+  position: absolute;
+  inset: 5%;
+  border: 1px solid rgba(245, 238, 220, 0.24);
+  border-radius: 50%;
+}
+
+.intro-cover__orbit--outer {
+  border-top-color: #c4161f;
+  animation: intro-orbit 12s linear infinite;
+}
+
+.intro-cover__orbit--inner {
+  inset: 17%;
+  border-right-color: rgba(245, 238, 220, 0.72);
+  animation: intro-orbit 8s linear infinite reverse;
+}
+
+.intro-cover__edition {
+  margin: 0 0 12px;
+  color: #e4202f;
+}
+
+.intro-cover__stage h1 {
+  margin: 0;
+  color: #f5eedc;
+  font: 400 clamp(36px, 6.5vw, 78px)/0.98 "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.intro-cover__stage h1 span {
+  display: block;
+  color: #e4202f;
+  font-style: italic;
+}
+
+.intro-cover__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3vw, 36px);
+  margin-top: 26px;
+}
+
+.intro-cover__bottom p {
+  margin: 0;
+  color: rgba(242, 235, 221, 0.82);
+  font: italic clamp(14px, 1.6vw, 17px) Georgia, "Times New Roman", serif;
+  letter-spacing: 0.01em;
+}
+
+.intro-cover__button {
+  flex: none;
+  min-height: 48px;
+  padding-inline: 22px;
+  border-color: #e4202f;
+  color: #f5eedc;
+  background: #c4161f;
+  font-size: 12px;
+  box-shadow: 0 0 24px rgba(196, 22, 31, 0.18);
+}
+
+.intro-cover__action {
+  position: relative;
+  display: inline-flex;
+}
+
+.intro-cover__cursor-cue {
+  position: absolute;
+  top: -25px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  color: #f5eedc;
+  font: 700 8px "Courier New", monospace;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 5px #09090a;
+  pointer-events: none;
+  animation: intro-cursor-tap 1.8s 900ms ease-in-out infinite;
+}
+
+.intro-cover__cursor-cue svg {
+  width: 20px;
+  height: 25px;
+  overflow: visible;
+  fill: #f5eedc;
+  stroke: #09090a;
+  stroke-linejoin: round;
+  stroke-width: 1.6px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.75));
+}
+
+.intro-cover__cursor-cue > span {
+  padding: 3px 4px;
+  border: 1px solid rgba(245, 238, 220, 0.45);
+  border-radius: 2px;
+  background: rgba(9, 9, 10, 0.72);
+}
+
+.intro-cover__button:hover {
+  background: #e4202f;
+  box-shadow: 0 0 30px rgba(228, 32, 47, 0.32);
+}
+
+.intro-cover__issue {
+  z-index: 1;
+  left: max(24px, 5vw);
+  right: auto;
+  bottom: 24px;
+  color: rgba(242, 235, 221, 0.6);
+}
+
+.intro-cover.is-opening {
+  animation: intro-curtain-open 1100ms 250ms cubic-bezier(0.7, 0, 0.3, 1) both;
+}
+
+.intro-cover.is-opening .intro-cover__stage {
+  animation: intro-stage-exit 700ms cubic-bezier(0.6, 0, 0.35, 1) both;
+}
+
+@keyframes intro-stage-enter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes intro-stage-exit {
+  to {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes intro-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes intro-curtain-open {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-cover__stage {
+    padding-inline: 8px;
+  }
+
+  .intro-cover__eyebrow,
+  .intro-cover__edition {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+  }
+
+  .intro-cover__mark {
+    width: clamp(120px, 38vw, 160px);
+    margin-bottom: 14px;
+  }
+
+  .intro-cover__stage h1 {
+    font-size: clamp(30px, 7.5vw, 44px);
+    line-height: 1;
+  }
+
+  .intro-cover__bottom {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .intro-cover__bottom p {
+    max-width: 30ch;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 601px) {
+  .intro-cover__eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .intro-cover__mark {
+    width: clamp(120px, 24vh, 170px);
+    margin-bottom: 10px;
+  }
+
+  .intro-cover__bottom {
+    margin-top: 18px;
+  }
+}
