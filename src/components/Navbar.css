@@ -1157,11 +1157,41 @@ display: inline-flex;
     display: none;
 }
 
+.ieee-brand-marks {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.ieee-navbar .ieee-tube--logo .ieee-brand-mark {
+    position: relative;
+    z-index: 1;
+    width: auto;
+    height: 34px;
+    object-fit: contain;
+    animation: ieee-mark-float 4.8s ease-in-out infinite;
+    transition: filter 220ms ease, transform 220ms ease;
+}
+
+.ieee-navbar .ieee-tube--logo .ieee-brand-mark--ieee {
+    max-width: 62px;
+}
+
+.ieee-navbar .ieee-tube--logo .ieee-brand-mark--wie {
+    height: 32px;
+    border-radius: 50%;
+    animation-delay: 180ms;
+}
+
+.ieee-brand-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(240, 231, 210, 0.3);
+}
+
 .ieee-navbar .ieee-tube--logo img {
     position: relative;
     z-index: 1;
-    animation: ieee-mark-float 4.8s ease-in-out infinite;
-    transition: filter 220ms ease, transform 220ms ease;
 }
 
 .ieee-navbar .ieee-tube--logo:hover img {
@@ -1192,6 +1222,26 @@ display: inline-flex;
     #team .grid.grid-cols-2 {
         column-gap: 14px;
     }
+
+    .ieee-brand-marks {
+        gap: 6px;
+    }
+
+    .ieee-navbar .ieee-tube--logo .ieee-brand-mark {
+        height: 30px;
+    }
+
+    .ieee-navbar .ieee-tube--logo .ieee-brand-mark--ieee {
+        max-width: 56px;
+    }
+
+    .ieee-navbar .ieee-tube--logo .ieee-brand-mark--wie {
+        height: 28px;
+    }
+
+    .ieee-brand-divider {
+        height: 21px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1202,7 +1252,7 @@ display: inline-flex;
         transition-duration: 0.01ms !important;
     }
 
-    .ieee-navbar .ieee-tube--logo img {
+    .ieee-navbar .ieee-tube--logo .ieee-brand-mark {
         animation: none;
     }
 }

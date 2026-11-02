@@ -134,15 +134,23 @@ export default function Navbar() {
                 {/* TUBE 1: Logo */}
                 <a
                     href="#home"
-                    aria-label="IEEE IGDTUW Home"
+                    aria-label="IEEE and WIE IGDTUW Home"
                     className="ieee-tube ieee-tube--logo justify-self-start"
                     onClick={() => setMenuOpen(false)}
                 >
-                    <img
-                        src={`${import.meta.env.BASE_URL}ieee-logo.png`}
-                        alt="IEEE Logo"
-                        className="h-8 w-auto object-contain sm:h-9"
-                    />
+                    <span className="ieee-brand-marks">
+                        <img
+                            src={`${import.meta.env.BASE_URL}ieee-logo.png`}
+                            alt="IEEE"
+                            className="ieee-brand-mark ieee-brand-mark--ieee"
+                        />
+                        <span className="ieee-brand-divider" aria-hidden="true" />
+                        <img
+                            src={`${import.meta.env.BASE_URL}wieLogo.png`}
+                            alt="WIE"
+                            className="ieee-brand-mark ieee-brand-mark--wie"
+                        />
+                    </span>
                 </a>
 
                 {/* TUBE 2: Nav links */}
