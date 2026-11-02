@@ -1132,6 +1132,14 @@ display: inline-flex;
     }
 }
 
+/* Keep the center capsule ink-dark in both themes; earlier theme rules use higher specificity. */
+.ieee-navbar[data-dark="true"] .ieee-tube--nav,
+.ieee-navbar[data-dark="false"] .ieee-tube--nav {
+    border: 1px solid rgba(240, 231, 210, 0.2) !important;
+    background: rgba(18, 18, 20, 0.92) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.08) !important;
+}
+
 /* Let the IEEE mark stand on its own; its soft pulse replaces the old badge. */
 .ieee-navbar[data-dark="true"] .ieee-tube--logo,
 .ieee-navbar[data-dark="false"] .ieee-tube--logo {
