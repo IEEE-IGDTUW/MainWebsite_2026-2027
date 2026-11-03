@@ -276,6 +276,32 @@ const heads = [
   },
 ];
 
+// Individual contact links. Missing details intentionally remain unavailable.
+const profileLinks = {
+  'Anushree Jain': { email: 'jainanushree2005@gmail.com', linkedin: 'https://www.linkedin.com/in/anushree-jain-2990a0285/' },
+  'Gunjan Aggarwal': { email: 'aggarwalgunjan2908@gmail.com', linkedin: 'https://www.linkedin.com/in/aggarwalgunjan2908?utm_source=share_via&utm_content=profile&utm_medium=member_ios' },
+  'Muskan Goel': { email: 'muskangoel1004@gmail.com', linkedin: 'https://www.linkedin.com/in/muskan-goel-apr10' },
+  'Saanvi Singh': { email: 'saanvi.singh@tila.in', linkedin: 'http://www.linkedin.com/in/saanvi-singh-29a521325' },
+  'Eshita Nagaria': { email: 'eshitanagariag@gmail.com', linkedin: 'https://www.linkedin.com/in/eshitanagaria/' },
+  'Likhila Vydana': { email: 'likhila.vydana@gmail.com', linkedin: 'https://www.linkedin.com/in/likhila-vydana-aab074325' },
+  'Aashi Garg': { email: 'aashigarg2504@gmail.com', linkedin: 'https://www.linkedin.com/in/aashi-garg-3b6713326/' },
+  'Parvati': { email: 'parvatisuthar2097@gmail.com', linkedin: 'https://www.linkedin.com/in/parvati-suthar/' },
+  'Anushka Goyal': { email: 'anushka037btcseai24@igdtuw.ac.in', linkedin: 'https://www.linkedin.com/in/anushka-goyal-a461a2329' },
+  'Tanishka Sharma': { email: 'tanishkasharma.4481@gmail.com', linkedin: 'https://www.linkedin.com/in/tanishka-sharma-b966b9323' },
+  'Sanchita Yadav': { email: 'sanchitayadav160106@gmail.com', linkedin: 'https://www.linkedin.com/in/sanchita-yadav-705081329' },
+  'Ria Saraswat': { email: 'riasaraswat2020@gmail.com', linkedin: 'https://www.linkedin.com/in/ria-saraswat-igdtuw' },
+  'Ekta Yadav': { email: 'ektay2424@gmail.com', linkedin: 'https://www.linkedin.com/in/ekta-yadav-8b87bb36a' },
+  'Tanisha Choudhary': { email: 'tanisha073btece25@igdtuw.ac.in', linkedin: 'https://www.linkedin.com/in/tanisha-choudhary-819b41416' },
+  'Hiti Panghal': { email: 'panghalhiti@gmail.com', linkedin: 'https://www.linkedin.com/in/hiti' },
+  'Mehak Taneja': { email: 'mehaktaneja2807@gmail.com', linkedin: 'https://www.linkedin.com/in/mehak-taneja-379334325' },
+  'Vaishnavi Shukla': { email: 'vaishnavi075btece25@igdtuw.ac.in', linkedin: 'https://www.linkedin.com/in/vaishnavi-shukla-624a54375' },
+  'Manya Gupta': { email: 'manuuu.4176@gmail.com', linkedin: 'https://www.linkedin.com/in/manyaxgupta' },
+  'Unnati': { email: 'unnatigautam2006@gmail.com', linkedin: 'https://www.linkedin.com/in/unnati-gautam-906521382' },
+  'Arushi': { email: 'arushi.mandal005@gmail.com', linkedin: 'https://www.linkedin.com/in/arushi-mandal-bb7519337' },
+  'Iti Goel': { email: 'itinsgoel@gmail.com', linkedin: 'https://www.linkedin.com/in/itinsgoel' },
+  'Eti Jain': { email: 'jaineti.in@gmail.com', linkedin: 'https://www.linkedin.com/in/eti-jain-90911a288' },
+};
+
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function InitialsAvatar({ initials, large = false }) {
@@ -339,23 +365,13 @@ function ProfileCard({ member, blackAndWhite, onToggle }) {
           <nav className="profile-card__socials" aria-label={`${member.name}'s links`}>
             <a
               className="profile-card__social"
-              href="https://www.instagram.com/ieeeigdtuw"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="IEEE IGDTUW on Instagram"
-            >
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
-            <a
-              className="profile-card__social"
-              href="https://www.linkedin.com/company/ieee-igdtuw/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="IEEE IGDTUW on LinkedIn"
+              href={profileLinks[member.name]?.linkedin || '#'}
+              target={profileLinks[member.name]?.linkedin ? '_blank' : undefined}
+              rel={profileLinks[member.name]?.linkedin ? 'noreferrer' : undefined}
+              aria-disabled={!profileLinks[member.name]?.linkedin}
+              onClick={(event) => { if (!profileLinks[member.name]?.linkedin) event.preventDefault(); }}
+              aria-label={profileLinks[member.name]?.linkedin ? `${member.name}'s LinkedIn profile` : 'Can’t access LinkedIn profile'}
+              title={profileLinks[member.name]?.linkedin ? 'LinkedIn profile' : 'Can’t access LinkedIn profile'}
             >
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="3" />
@@ -364,8 +380,11 @@ function ProfileCard({ member, blackAndWhite, onToggle }) {
             </a>
             <a
               className="profile-card__social"
-              href="mailto:ieeeigdtu@gmail.com"
-              aria-label="Email IEEE IGDTUW"
+              href={profileLinks[member.name]?.email ? `mailto:${profileLinks[member.name].email}` : '#'}
+              aria-disabled={!profileLinks[member.name]?.email}
+              onClick={(event) => { if (!profileLinks[member.name]?.email) event.preventDefault(); }}
+              aria-label={profileLinks[member.name]?.email ? `Email ${member.name}` : 'Email unavailable'}
+              title={profileLinks[member.name]?.email || 'Email unavailable'}
             >
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <rect x="3" y="5" width="18" height="14" rx="3" />

@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 import GhostCursor from './components/GhostCursor';
 import CustomCursor from './components/CustomCursor';
 import LeadCast from './components/LeadCast';
-import PhotoHelix from './components/PhotoHelix';
+// import PhotoHelix from './components/PhotoHelix';
 import Fold3D from './components/Fold3D';
 import Intro from './components/Intro';
 
@@ -209,7 +209,7 @@ function App() {
         </div>
         <About />
         <Events />
-        <PhotoHelix />
+        {/* <PhotoHelix /> */}
         <Chapters />
         <LeadCast />
         <People />
