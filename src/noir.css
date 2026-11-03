@@ -76,3 +76,74 @@ html.dark .ieee-footer h3,html.dark .ieee-footer__label{color:var(--accent)!impo
 html.dark .ieee-footer .ieee-footer__logo-mark{background-color:#d6b77c!important}
 html.dark .ieee-footer .ieee-footer__address{color:#c8c0b3!important;opacity:1}
 .poster__shade{background:linear-gradient(to top,#000 2%,rgba(0,0,0,.4) 32%,transparent 58%),linear-gradient(to bottom,rgba(0,0,0,.6),transparent 18%)}
+/* LEAD CAST SOCIAL LINKS */
+.poster__socials {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    z-index: 10;
+  
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(12px);
+  
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease,
+      visibility 0.3s ease;
+  }
+  
+  .poster:hover .poster__socials,
+  .poster:focus-within .poster__socials {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  
+  .poster__social {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+  
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 9px;
+  
+    background: rgba(255,255,255,0.12);
+    color: white;
+  
+    transition: 0.2s ease;
+  }
+  
+  .poster__social:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: white;
+    transform: translateY(-3px);
+  }
+  
+  .poster__social svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    fill: none;
+  }
+  
+  .poster__glare {
+    z-index: 5;
+  }
+  
+  .poster__shade {
+    z-index: 2;
+  }
+  
+  .poster__role,
+  .poster__name {
+    z-index: 3;
+  }

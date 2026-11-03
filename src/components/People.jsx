@@ -66,6 +66,9 @@ const leadershipAll = [
 ];
 const leadership = leadershipAll.slice(4);
 
+// Cards that show LinkedIn/mail on hover (overlay) instead of the footer icons.
+const hoverSocialIds = ['01', '02', '03', '04'];
+
 const compactRoles = {
   'Event Management Head': 'EM Head',
   'IEEE General Secretary': 'IEEE Gen. Sec.',
@@ -300,6 +303,9 @@ const profileLinks = {
   'Arushi': { email: 'arushi.mandal005@gmail.com', linkedin: 'https://www.linkedin.com/in/arushi-mandal-bb7519337' },
   'Iti Goel': { email: 'itinsgoel@gmail.com', linkedin: 'https://www.linkedin.com/in/itinsgoel' },
   'Eti Jain': { email: 'jaineti.in@gmail.com', linkedin: 'https://www.linkedin.com/in/eti-jain-90911a288' },
+  // TODO: add details for Himani Gupta and Sneha Yadav (cards 01 and 04)
+  // 'Himani Gupta': { email: '', linkedin: '' },
+  // 'Sneha Yadav': { email: '', linkedin: '' },
 };
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -319,7 +325,48 @@ function InitialsAvatar({ initials, large = false }) {
   );
 }
 
-function ProfileCard({ member, blackAndWhite, onToggle }) {
+// Overlay shown on hover/focus over the photo. Absolutely positioned, so it
+// never affects card size or layout.
+function HoverSocials({ member }) {
+  const links = profileLinks[member.name];
+  const base =
+    'pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80';
+
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex translate-y-2 justify-center gap-3 bg-gradient-to-t from-black/50 to-transparent p-3 pt-8 opacity-0 transition duration-300 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100">
+      <a
+        className={`${base}${links?.linkedin ? '' : ' opacity-40'}`}
+        href={links?.linkedin || '#'}
+        target={links?.linkedin ? '_blank' : undefined}
+        rel={links?.linkedin ? 'noreferrer' : undefined}
+        aria-disabled={!links?.linkedin}
+        onClick={(e) => { if (!links?.linkedin) e.preventDefault(); }}
+        aria-label={links?.linkedin ? `${member.name}'s LinkedIn profile` : 'LinkedIn unavailable'}
+        title={links?.linkedin ? 'LinkedIn profile' : 'LinkedIn unavailable'}
+      >
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="3" />
+          <path d="M8 10v7M8 7.5v.1M12 17v-4a3 3 0 0 1 6 0v4M12 10v7" />
+        </svg>
+      </a>
+      <a
+        className={`${base}${links?.email ? '' : ' opacity-40'}`}
+        href={links?.email ? `mailto:${links.email}` : '#'}
+        aria-disabled={!links?.email}
+        onClick={(e) => { if (!links?.email) e.preventDefault(); }}
+        aria-label={links?.email ? `Email ${member.name}` : 'Email unavailable'}
+        title={links?.email || 'Email unavailable'}
+      >
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="3" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+      </a>
+    </div>
+  );
+}
+
+function ProfileCard({ member, blackAndWhite, onToggle, hoverSocials = false }) {
   const [imageFailed, setImageFailed] = useState(false);
 
   return (
@@ -357,18 +404,24 @@ function ProfileCard({ member, blackAndWhite, onToggle }) {
             <h3>{member.name}</h3>
             {member.heicFallback && <small>Photo pending conversion</small>}
           </div>
+          {hoverSocials && <HoverSocials member={member} />}
         </div>
         <div className="profile-card__footer">
           <p className="profile-card__role" title={member.role}>
             {compactRoles[member.role] || member.role}
           </p>
-          <nav className="profile-card__socials" aria-label={`${member.name}'s links`}>
+          <nav
+            className={`profile-card__socials${hoverSocials ? ' invisible' : ''}`}
+            aria-label={`${member.name}'s links`}
+            aria-hidden={hoverSocials || undefined}
+          >
             <a
               className="profile-card__social"
               href={profileLinks[member.name]?.linkedin || '#'}
               target={profileLinks[member.name]?.linkedin ? '_blank' : undefined}
               rel={profileLinks[member.name]?.linkedin ? 'noreferrer' : undefined}
               aria-disabled={!profileLinks[member.name]?.linkedin}
+              tabIndex={hoverSocials ? -1 : undefined}
               onClick={(event) => { if (!profileLinks[member.name]?.linkedin) event.preventDefault(); }}
               aria-label={profileLinks[member.name]?.linkedin ? `${member.name}'s LinkedIn profile` : 'Can’t access LinkedIn profile'}
               title={profileLinks[member.name]?.linkedin ? 'LinkedIn profile' : 'Can’t access LinkedIn profile'}
@@ -382,6 +435,7 @@ function ProfileCard({ member, blackAndWhite, onToggle }) {
               className="profile-card__social"
               href={profileLinks[member.name]?.email ? `mailto:${profileLinks[member.name].email}` : '#'}
               aria-disabled={!profileLinks[member.name]?.email}
+              tabIndex={hoverSocials ? -1 : undefined}
               onClick={(event) => { if (!profileLinks[member.name]?.email) event.preventDefault(); }}
               aria-label={profileLinks[member.name]?.email ? `Email ${member.name}` : 'Email unavailable'}
               title={profileLinks[member.name]?.email || 'Email unavailable'}
@@ -473,6 +527,7 @@ export default function People() {
                 member={member}
                 blackAndWhite={Boolean(blackAndWhite[member.id])}
                 onToggle={() => togglePortrait(member.id)}
+                hoverSocials={hoverSocialIds.includes(member.id)}
               />
             ))}
           </div>
@@ -500,6 +555,7 @@ export default function People() {
                 member={member}
                 blackAndWhite={Boolean(blackAndWhite[member.id])}
                 onToggle={() => togglePortrait(member.id)}
+                hoverSocials={hoverSocialIds.includes(member.id)}
               />
             ))}
           </div>
