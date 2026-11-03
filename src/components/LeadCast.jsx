@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -40,29 +41,60 @@ const CAST = [
     first: 'Sneha',
     last: 'Yadav',
     file: 'Sneha Yadav _WIE Vice Chairperson_.jpg',
-    linkedin: 'https://www.linkedin.com/in/sneha-yadav-11a454283?utm_source=share_via&utm_content=profile&utm_medium=member_android',
-    email: 'sy0381718@gmail.com',
+    linkedin: '',
+    email: '',
   },
 ];
 
-/* Social icon styling specifically for LeadCast posters */
 const socialStyles = `
-  .poster__socials {
+  /* Dark gradient rising from the bottom */
+  .poster__dark-overlay {
     position: absolute;
-    bottom: 18px;
-    left: 18px;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    inset: auto 0 0;
+    height: 42%;
+    z-index: 6;
+    pointer-events: none;
+
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.98) 0%,
+      rgba(0,0,0,0.78) 35%,
+      rgba(0,0,0,0.35) 70%,
+      transparent 100%
+    );
+
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .poster:hover .poster__dark-overlay {
+    opacity: 1;
+  }
+
+  /* Social icons: top-right corner */
+  .poster__socials {
+    position: absolute !important;
+    top: 75px !important;
+    right: 18px !important;
+    bottom: auto !important;
+    left: auto !important;
+
+    z-index: 20 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+
+    width: auto !important;
+    height: auto !important;
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(12px);
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease,
-      visibility 0.3s ease;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
   }
 
   .poster:hover .poster__socials,
@@ -70,75 +102,79 @@ const socialStyles = `
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 
+  /* Prominent icon buttons */
   .poster__social {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
-    border: 1px solid rgba(255,255,255,0.35);
-    border-radius: 9px;
-    background: rgba(255,255,255,0.12);
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    border: 1.5px solid rgba(255,255,255,0.9);
+    border-radius: 12px;
+    background: rgba(10,10,12,0.92);
     color: white;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
     text-decoration: none;
+    transition: all 0.25s ease;
   }
 
   .poster__social:hover {
-    background: rgba(255,255,255,0.25);
-    border-color: white;
-    transform: translateY(-3px);
-  }
-
-  .poster__social:focus-visible {
-    outline: 2px solid white;
-    outline-offset: 3px;
+    background: #e4202f;
+    border-color: #ff5965;
+    box-shadow: 0 0 20px rgba(228,32,47,0.7);
+    transform: scale(1.1);
   }
 
   .poster__social svg {
-    width: 18px;
-    height: 18px;
+    width: 23px;
+    height: 23px;
     stroke: currentColor;
-    stroke-width: 1.8;
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
-  }
-
-  .poster__glare {
-    z-index: 5;
   }
 
   .poster__shade {
     z-index: 2;
   }
 
-  .poster__role,
+  .poster__role {
+    z-index: 4;
+  }
+
   .poster__name {
-    z-index: 3;
+    z-index: 4;
+    right: 18px !important;
+  }
+
+  .poster__glare {
+    z-index: 8;
   }
 
   @media (max-width: 600px) {
     .poster__socials {
-      bottom: 14px;
-      left: 14px;
-      gap: 9px;
+      top: 75px !important;
+      right: 10px !important;
+      gap: 10px !important;
     }
 
     .poster__social {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
+      width: 38px;
+      height: 38px;
     }
 
     .poster__social svg {
-      width: 16px;
-      height: 16px;
+      width: 19px;
+      height: 19px;
     }
   }
 `;
-
 function Poster({ p }) {
   const ref = useRef(null);
 
@@ -183,7 +219,6 @@ function Poster({ p }) {
         </div>
 
         <div className="poster__name">
-          <small>IEEE IGDTUW · 2026—27</small>
           <h3>
             {p.first}
             <br />
@@ -201,7 +236,7 @@ function Poster({ p }) {
           }}
         />
 
-        {/* LinkedIn and Email icons */}
+        {/* Vertically stacked social icons on the right */}
         <nav
           className="poster__socials"
           aria-label={`${p.first} ${p.last}'s social links`}
@@ -265,7 +300,9 @@ export default function LeadCast() {
   const root = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       return undefined;
     }
 
