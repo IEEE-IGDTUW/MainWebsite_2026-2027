@@ -101,14 +101,7 @@ function resetProfileCard(event) {
 
 const heads = [
   // Event Management Heads
-  {
-    id: '08',
-    name: 'Aakanksha Jha',
-    role: 'Event Management Head',
-    image: `${BASE}Aakanksha Jha _ EM Head.jpeg`,
-    heicFallback: false,
-    initials: 'AJ',
-  },
+
   {
     id: '09',
     name: 'Eshita Nagaria',
